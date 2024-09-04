@@ -42,8 +42,8 @@ class AuthenticatedSessionController extends Controller
         }
 
         $request->session()->regenerate();
+        return redirect()->intended('/user/dashboard');
 
-        return redirect()->intended('/dashboard');
 
     }
 
@@ -57,5 +57,34 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    // public function dashboard()
+    // {
+    //     // ดึงข้อมูลผู้ใช้ที่เข้าสู่ระบบแล้ว
+    //     $user = Auth::user();
+
+    //     // ส่งข้อมูลผู้ใช้ไปยังวิว
+    //     return view('user.dashboard', [
+    //         'name' => $user->name,
+    //         'email' => $user->email,
+    //         'username' => $user->username,
+    //         'phone' => $user->phone,
+    //     ]);
+    // }
+
+    public function dashboard()
+    {
+        // ดึงข้อมูลผู้ใช้ที่เข้าสู่ระบบแล้ว
+        $user = Auth::user();
+
+        // ส่งข้อมูลผู้ใช้ไปยังวิว
+        return view('user.dashboard', [
+            'name' => $user->name,
+            'email' => $user->email,
+            'username' => $user->username,
+            'phone' => $user->phone,
+        ]);
+    }
+
 }
 
