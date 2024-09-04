@@ -85,6 +85,7 @@
                                         </button>
                                     </form>
 
+
                                 </div>
                             </div>
                         </div>
@@ -158,12 +159,14 @@
                 <div class="col-md-8">
                     <div class="card mb-3">
                         <div class="card-body">
+                            <h3 class="mt-1">ข้อมูลส่วนตัว</h3>
+                            <br>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">ชื่อ - นามสกุล</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    Kenneth Valdez
+                                    {{ $name }}
                                 </div>
                             </div>
                             <hr>
@@ -172,7 +175,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    fip@jukmuh.al
+                                    {{ $email }}
                                 </div>
                             </div>
                             <hr>
@@ -181,7 +184,7 @@
                                     <h6 class="mb-0">Username</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (239) 816-9029
+                                    {{ $username }}
                                 </div>
                             </div>
                             <hr>
@@ -190,9 +193,34 @@
                                     <h6 class="mb-0">หมายเลขโทรศัพท์</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (320) 380-4539
+                                    {{ $phone }}
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">ตำแหน่ง</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @switch($position)
+                                        @case('user')
+                                            ผู้ใช้งาน
+                                            @break
+                                        @case('admin')
+                                            ผู้ดูแลระบบ
+                                            @break
+                                        @case('manager')
+                                            ผู้จัดการ
+                                            @break
+                                        @case('staff')
+                                            พนักงาน
+                                            @break
+                                        @default
+                                            ไม่ทราบตำแหน่ง
+                                    @endswitch
+                                </div>
+                            </div>
+
                             {{-- <hr>
                             <div class="row">
                                 <div class="col-sm-3">
@@ -205,8 +233,10 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info " target="__blank"
-                                        href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">แก้ไขข้อมูล</a>
+                                    {{-- <a class="btn btn-info " target="__blank" href="">แก้ไขข้อมูล</a> --}}
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+                                        แก้ไขข้อมูล
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -289,6 +319,126 @@
 </body>
 
 </html>
+
+<!-- Modal -->
+{{-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">แก้ไขข้อมูล</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" action="{{ route('updateUserProfile') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="name" class="form-label">ชื่อ - นามสกุล</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $email }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ $username }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">หมายเลขโทรศัพท์</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ $phone }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="position" class="form-label">ตำแหน่ง</label>
+                        <select class="form-select" id="position" name="position" required>
+                            <option value="user" {{ $position == 'user' ? 'selected' : '' }}>ผู้ใช้งาน</option>
+                            <option value="admin" {{ $position == 'admin' ? 'selected' : '' }}>ผู้ดูแลระบบ</option>
+                            <option value="manager" {{ $position == 'manager' ? 'selected' : '' }}>ผู้จัดการ</option>
+                            <option value="staff" {{ $position == 'staff' ? 'selected' : '' }}>พนักงาน</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                <button type="submit" form="editForm" class="btn btn-primary">บันทึกการเปลี่ยนแปลง</button>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">แก้ไขข้อมูล</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="name" class="form-label">ชื่อ - นามสกุล</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ $email }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ $username }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">หมายเลขโทรศัพท์</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ $phone }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="position" class="form-label">ตำแหน่ง</label>
+                        <select class="form-select" id="position" name="position" required>
+                            <option value="user" {{ $position == 'user' ? 'selected' : '' }}>ผู้ใช้งาน</option>
+                            <option value="admin" {{ $position == 'admin' ? 'selected' : '' }}>ผู้ดูแลระบบ</option>
+                            <option value="manager" {{ $position == 'manager' ? 'selected' : '' }}>ผู้จัดการ</option>
+                            <option value="staff" {{ $position == 'staff' ? 'selected' : '' }}>พนักงาน</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                <button type="button" id="saveChanges" class="btn btn-primary">บันทึกการเปลี่ยนแปลง</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery และ AJAX script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#saveChanges').click(function() {
+            $.ajax({
+                url: '{{ route("updateUserProfile") }}',
+                type: 'POST',
+                data: $('#editForm').serialize(),
+                success: function(response) {
+                    if(response.success) {
+                        alert(response.message);
+                        $('#editModal').modal('hide');
+                        // อัปเดตข้อมูลผู้ใช้บนเพจหากจำเป็น
+                        // ตัวอย่าง: $('#nameDisplay').text(response.user.name);
+                    }
+                },
+                error: function(xhr) {
+                    // จัดการข้อผิดพลาด
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
 
 
 <style>

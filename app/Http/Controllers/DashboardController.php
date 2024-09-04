@@ -28,6 +28,7 @@ class DashboardController extends Controller
             'email' => $user->email,
             'username' => $user->username,
             'phone' => $user->phone,
+            'position' => $user->position,
         ]);
     }
 

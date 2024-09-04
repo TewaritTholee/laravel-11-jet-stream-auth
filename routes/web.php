@@ -25,11 +25,29 @@ Route::get('/user/dashboard', [\App\Http\Controllers\Auth\AuthenticatedSessionCo
 
 // กำหนดเส้นทางไปยังหน้า dashboard ในโฟลเดอร์ register
 Route::get('/user/register', [App\Http\Controllers\UserController::class, 'showRegisterForm'])->name('user.register');
-Route::post('/user/register', [App\Http\Controllers\UserController::class, 'register'])->name('user.register.submit');
+Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('auth');
+
+// อัปเดตโปรไฟล์
+Route::post('/update-user-profile', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('updateUserProfile');
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+// Route::post('/user/register', [App\Http\Controllers\UserController::class, 'register'])->name('user.register.submit')->middleware('auth');
+
+
+// Route::post('/user/register', [App\Http\Controllers\UserController::class, 'register'])->name('user.register.submit');
 
 // เช็คการเข้าถึงจาก Authenticate
 // Route::middleware(['auth'])->group(function () {
@@ -38,5 +56,5 @@ Route::post('/user/register', [App\Http\Controllers\UserController::class, 'regi
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
-Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('auth');
+// Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('auth');
 

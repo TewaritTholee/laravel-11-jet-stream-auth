@@ -66,7 +66,7 @@
                 </div>
             </form> --}}
 
-            <form action="{{ route('user.register') }}" method="POST">
+            {{-- <form action="{{ route('user.register') }}" method="POST">
                 @csrf
                 <div class="user-details">
                     <div class="input-box">
@@ -94,11 +94,79 @@
                         <input type="password" name="password_confirmation" placeholder="" required>
                     </div>
                 </div>
-                
+
+                <div class="button">
+                    <input type="submit" value="เพิ่มข้อมูลลูกค้า">
+                </div>
+            </form> --}}
+
+            <!-- jQuery -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <form id="registerForm">
+                @csrf
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">ชื่อ - นามสกุล</span>
+                        <input type="text" name="name" placeholder="" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Username</span>
+                        <input type="text" name="username" placeholder="" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input type="email" name="email" placeholder="" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">หมายเลขโทรศัพท์</span>
+                        <input type="text" name="phone" placeholder="" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">รหัสผ่าน</span>
+                        <input type="password" name="password" placeholder="" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">ยืนยันรหัสผ่าน</span>
+                        <input type="password" name="password_confirmation" placeholder="" required>
+                    </div>
+                </div>
+
                 <div class="button">
                     <input type="submit" value="เพิ่มข้อมูลลูกค้า">
                 </div>
             </form>
+
+            <script>
+                $(document).ready(function() {
+                    $('#registerForm').on('submit', function(event) {
+                        event.preventDefault(); // ป้องกันการรีโหลดหน้า
+
+                        $.ajax({
+                            url: '{{ route('user.register') }}', // ใช้ URL จาก route
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            success: function(response) {
+                                if(response.success) {
+                                    alert(response.message);
+                                    $('#registerForm')[0].reset();
+                                }
+                            },
+                            error: function(xhr) {
+                                let errors = xhr.responseJSON.errors;
+                                let errorMessages = '';
+                                for(let key in errors) {
+                                    if(errors.hasOwnProperty(key)) {
+                                        errorMessages += errors[key] + '\n';
+                                    }
+                                }
+                                alert('เกิดข้อผิดพลาด:\n' + errorMessages);
+                            }
+                        });
+                    });
+                });
+            </script>
+
 
         </div>
     </div>
